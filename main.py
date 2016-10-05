@@ -94,7 +94,7 @@ def game():
             else:
                 snake.append(next_step)
                 prey = 0
-                if len(snake) > 13:
+                if len(snake) > 12:
                     vector = -1
                 pygame.time.delay(10)
         else:
@@ -110,7 +110,7 @@ def game():
                 alpha += 1
                 finally_background.set_alpha(alpha)
             screen.blit(finally_background, (0, 0))
-            if len(snake) < 13:
+            if len(snake) < 12:
                 screen.blit(ff.render('Поражение!', 1, (250, 150, 120)), (100, 190))
             else:
                 screen.blit(ff.render('Победа!', 1, (250, 150, 120)), (150, 190))
