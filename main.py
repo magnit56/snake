@@ -49,6 +49,7 @@ def game():
     x = 14
     y = 7
     prey = 0
+    alpha = 0
     done = False
     while not done:
         screen.fill((50, 50, 50))
@@ -93,6 +94,8 @@ def game():
             else:
                 snake.append(next_step)
                 prey = 0
+                if len(snake) > 13:
+                    vector = -1
                 pygame.time.delay(10)
         else:
             vector = -1
@@ -103,7 +106,6 @@ def game():
             h.blit(screen, snake, prey)
 
         if vector == -1:
-            alpha = finally_background.get_alpha()
             if alpha < 100:
                 alpha += 1
                 finally_background.set_alpha(alpha)
@@ -111,11 +113,13 @@ def game():
             if len(snake) < 13:
                 screen.blit(ff.render('Поражение!', 1, (250, 150, 120)), (100, 190))
             else:
-                screen.blit(ff.render('Победа!', 1, (250, 150, 120)), (100, 190))
+                screen.blit(ff.render('Победа!', 1, (250, 150, 120)), (150, 190))
         else:
             pygame.time.delay(500)
 
         screen.blit(ff2.render('Управление клавишами <- и ->.', 1, (250, 250, 120)), (20, 450))
+        screen.blit(ff2.render('Выйти - Esc.', 1, (250, 250, 120)), (500, 450))
+        screen.blit(ff2.render('Для победы наберите 10 очков', 1, (120, 250, 120)), (350, 5))
         screen.blit(ff2.render('Очки: %s' % (len(snake)-3), 1, (120, 250, 120)), (15, 5))
 
         window.blit(screen, (0, 0))
@@ -123,8 +127,10 @@ def game():
 
         for e in pygame.event.get():
             if e.type == pygame.QUIT:
-                done = True
+                sys.exit(0)
             if e.type == pygame.KEYDOWN:
+                if e.key == pygame.K_ESCAPE:
+                    done = True
                 if vector > 0:
                     if e.key == pygame.K_LEFT:
                         vector -= 1
@@ -135,5 +141,25 @@ def game():
                         if vector > 6:
                             vector = 1
 
+def menu():
+    menu_font = pygame.font.Font(None, 80)
+    while 1:
+        for e in pygame.event.get():
+            if e.type == pygame.QUIT:
+                sys.exit(0)
+
+            if e.type == pygame.KEYDOWN:
+                if e.key == pygame.K_RETURN:
+                    game()
+                if e.key == pygame.K_ESCAPE:
+                    sys.exit(0)
+
+        screen.fill((25, 50, 100))
+        screen.blit(menu_font.render('Начать игру - Enter', 1, (255, 200, 100)), (60, 150))
+        screen.blit(menu_font.render('Выйти - Esc', 1, (255, 200, 100)), (150, 250))
+
+        window.blit(screen, (0, 0))
+        pygame.display.flip()
+
 if __name__ == '__main__':
-    game()
+    menu()
