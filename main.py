@@ -94,9 +94,9 @@ def game():
             else:
                 snake.append(next_step)
                 prey = 0
-                if len(snake) > 12:
+                if len(snake) > 13:
                     vector = -1
-                pygame.time.delay(10)
+                pygame.time.delay(100)
         else:
             vector = -1
         if id < 0 or id > 16 or y < 0 or y > 9:
@@ -110,7 +110,7 @@ def game():
                 alpha += 1
                 finally_background.set_alpha(alpha)
             screen.blit(finally_background, (0, 0))
-            if len(snake) < 12:
+            if len(snake) < 13:
                 screen.blit(ff.render('Поражение!', 1, (250, 150, 120)), (100, 190))
             else:
                 screen.blit(ff.render('Победа!', 1, (250, 150, 120)), (150, 190))
@@ -140,7 +140,27 @@ def game():
                         vector += 1
                         if vector > 6:
                             vector = 1
+                    if e.key == pygame.K_e:
+                        if vector != 4:
+                            vector = 1
+                    if e.key == pygame.K_d:
+                        if vector != 5:
+                            vector = 2
+                    if e.key == pygame.K_x:
+                        if vector != 6:
+                            vector = 3
+                    if e.key == pygame.K_z:
+                        if vector != 1:
+                            vector = 4
+                    if e.key == pygame.K_a:
+                        if vector != 2:
+                            vector = 5
+                    if e.key == pygame.K_w:
+                        if vector != 3:
+                            vector = 6
 
+
+                            
 def menu():
     menu_font = pygame.font.Font(None, 80)
     while 1:
